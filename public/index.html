@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Send Image</h1>
+    <form>
+        <input type="text" id = "input" />
+        <button id="post">Post</button>
+        <button id="get">Get</button>
+    </form>
+    <script>
+        const getBtn = document.getElementById('get')
+        const postBtn = document.getElementById('post')
+        const input = document.getElementById('input')
+        
+        const baseurl = 'http://localhost:9999'
+
+        getBtn.addEventListener('click', getinfo)
+        postBtn.addEventListener('click',postinfo)
+        async function getinfo(e) {
+            e.preventDefault()
+            const res = await fetch(baseurl + "/get-image",
+            {
+                method:'GET'
+            })
+            console.log(res);
+            const data = await res.json()
+            input.value = data.image
+        }
+        async function postinfo(e) {
+            e.preventDefault()
+            const res = await fetch(baseurl + "/post-image", {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({image: input.value})
+            });
+            console.log(res);
+        }
+    </script>
+</body>
+</html>
