@@ -19,4 +19,18 @@ server.post('/post-image', function(req, res) {
 });
 
 
+//Mode of the Matrix
+let modedata= ""
+
+server.get('/mode/get', (req, res) => {
+    res.status(200).json({mode:modedata})
+})
+
+server.post('/mode/post', function(req, res) {
+    console.log(req.body);      // your JSON
+    res.send(req.body);
+    modedata = req.body.image  
+});
+
+
 server.listen(PORT, () => console.log(`Server has been started on port: ${PORT}`))

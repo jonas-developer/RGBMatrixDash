@@ -4,8 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <form>
+        <label for="Mode">Mode:</label>
+        <select id="mode" onchange="dropdownchange()">
+            <option value="text">Text</option>
+            <option value="image">Bild</option>
+            <option value="gif">Gif</option>
+            <option value="clock">Uhr</option>
+        </select>
+    </form>
+
+    <script>
+        const baseurl = 'http://localhost:9999'
+        function dropdownchange() {
+            var dropdown = document.getElementById("mode");
+            var selectedValue = dropdown.options[dropdown.selectedIndex].value;
+            document.getElementById("selectedValue").textContent = selectedValue;
+        }
+        async function postinfo(e) {
+            e.preventDefault()
+            const res = await fetch(baseurl + "/post-image", {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({image: input.value})
+            });
+            console.log(res);
+        }
+    </script>
+    
+    <p>Ausgewähltes Auto: <span id="selectedValue"></span></p>
+    
     <h1>Send Image</h1>
     <form>
         <input type="text" id = "input" />
@@ -13,11 +45,12 @@
         <button id="get">Get</button>
     </form>
     <script>
+
         const getBtn = document.getElementById('get')
         const postBtn = document.getElementById('post')
         const input = document.getElementById('input')
         
-        const baseurl = 'http://localhost:9999'
+        const baseurld = 'http://localhost:9999'
 
         getBtn.addEventListener('click', getinfo)
         postBtn.addEventListener('click',postinfo)
